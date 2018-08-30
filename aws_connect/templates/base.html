@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <title>AWS Connect Demo</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Penn Med Demo:</h2>
+            {% if len(supergroups) == 0 %}
+            <h4 style="color: darkred">No data found in database</h4>
+            {% else %}
+            <select id="select-super">
+                {% for supergroup in supergroups %}
+                <option value="{{ supergroup.pk }}">{{ supergroup.super_group }}</option>
+                {% endfor %}
+            </select>
+            {% endif %}
+
+            {% block groups %}{% endblock %}
+            <table class="table">
+            {% for group in groups %}
+                <tr>
+                    <td>{{ group.super_group }}</td>
+                    <td>{{ group.primary_cpt_group }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </body>
+</html>

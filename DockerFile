@@ -1,0 +1,7 @@
+FROM python:3
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /aws_poc
+WORKDIR /aws_poc
+ADD requirements.txt /aws_poc/
+RUN pip install -r requirements.txt
+ADD . /aws_poc/
