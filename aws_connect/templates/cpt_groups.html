@@ -1,0 +1,8 @@
+<table class="table table-hover" id="table-cpt-groups">
+{% for cpt_group in cpt_groups %}
+    <tr>
+        <td>{{ cpt_group.super_group }}</td>
+        <td>{{ cpt_group.primary_cpt_group }}</td>
+    </tr>
+{% endfor %}
+</table>

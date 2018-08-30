@@ -1,34 +1,43 @@
-<html>
+{% load static %}
+
+<!doctype html>
+<html lang="en">
     <head>
         <title>AWS Connect Demo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body>
         <div class="container">
             <h2>Penn Med Demo:</h2>
-            {% if len(supergroups) == 0 %}
-            <h4 style="color: darkred">No data found in database</h4>
-            {% else %}
-            <select id="select-super">
-                {% for supergroup in supergroups %}
-                <option value="{{ supergroup.pk }}">{{ supergroup.super_group }}</option>
-                {% endfor %}
-            </select>
-            {% endif %}
 
-            {% block groups %}{% endblock %}
-            <table class="table">
-            {% for group in groups %}
-                <tr>
-                    <td>{{ group.super_group }}</td>
-                    <td>{{ group.primary_cpt_group }}</td>
-                </tr>
-            {% endfor %}
-            </table>
+            <div id="div-super">
+                {% if len(supergroups) == 0 %}
+                <h4 style="color: darkred">No data found in database</h4>
+                {% else %}
+                <label for="select-super">Select Super-Group:</label>
+                <select id="select-super">
+                    {% for supergroup in supergroups %}
+                    <option value="{{ supergroup.pk }}">{{ supergroup.super_group }}</option>
+                    {% endfor %}
+                </select>
+                {% endif %}
+            </div>
+            
+            <div id="div-cpt"></div>
         </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/utils.js' %}"></script>
+        <script>
+        $(document).ready(function() {
+            $('#select-super').change(function(e) {
+                var super_group_id = $("#dateRange option:selected").val();
+                $('div-cpt').load("{% url 'get_cpt_groups' super_group_id %}");
+            });
+        });
+        </script>
     </body>
 </html>
