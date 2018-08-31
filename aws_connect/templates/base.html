@@ -35,8 +35,8 @@
         <script>
         $(document).ready(function() {
             $('#select-super').change(function(e) {
-                var super_group_id = $("#dateRange option:selected").val();
-                $('#div-cpt-groups').load("{% url 'cpt_groups' %}");
+                var super_group = $("#select-super option:selected").val();
+                $('#div-cpt-groups').load("{% url 'cpt_groups' 'param' %}".replace('param', encodeURI(super_group)));
             });
         });
         </script>
