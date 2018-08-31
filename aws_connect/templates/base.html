@@ -6,36 +6,37 @@
         <title>AWS Connect Demo</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta charset="utf-8">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     </head>
     <body>
         <div class="container">
             <h2>Penn Med Demo:</h2>
 
             <div id="div-super">
-                {% if len(supergroups) == 0 %}
+                {% if super_groups|length == 0 %}
                 <h4 style="color: darkred">No data found in database</h4>
                 {% else %}
                 <label for="select-super">Select Super-Group:</label>
                 <select id="select-super">
-                    {% for supergroup in supergroups %}
-                    <option value="{{ supergroup.pk }}">{{ supergroup.super_group }}</option>
+                    {% for item in super_groups %}
+                    <option value="{{ item.super_group }}">{{ item.super_group }}</option>
                     {% endfor %}
                 </select>
                 {% endif %}
             </div>
+            <br>
             
-            <div id="div-cpt"></div>
+            <div id="div-cpt-groups"></div>
         </div>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="{% static 'js/utils.js' %}"></script>
         <script>
         $(document).ready(function() {
             $('#select-super').change(function(e) {
                 var super_group_id = $("#dateRange option:selected").val();
-                $('div-cpt').load("{% url 'get_cpt_groups' super_group_id %}");
+                $('#div-cpt-groups').load("{% url 'cpt_groups' %}");
             });
         });
         </script>
