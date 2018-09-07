@@ -138,3 +138,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
+
+# S3 Bucket Configurations
+AWS_S3_BUCKET = 'ct-s3-pennmed-files'

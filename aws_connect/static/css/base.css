@@ -1,0 +1,13 @@
+button[id=upload-cpt] {
+    margin-top: 10px;
+    background-color: steelblue;
+}
+
+input[id=cpt-file] {
+    padding: 2px 4px;
+}
+
+.notification.failure {
+    background-color: lightcoral;
+    padding-left: 20px;
+}
