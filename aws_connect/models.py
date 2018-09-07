@@ -22,3 +22,11 @@ class ProcedureMedianAvg(models.Model):
 
     class Meta:
         db_table = 'CPT_CODE_MEDIAN_AVG'
+
+
+class FileHandler(models.Model):
+    file_name = models.TextField(max_length=255)
+    file_type = models.TextField(max_length=10)
+    s3_bucket = models.TextField(max_length=100)
+    s3_folder = models.TextField(max_length=100)
+    uploaded_at = models.DateTimeField()

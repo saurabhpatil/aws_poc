@@ -11,3 +11,8 @@ input[id=cpt-file] {
     background-color: lightcoral;
     padding-left: 20px;
 }
+
+.notification.success {
+    background-color: lightgreen;
+    padding-left: 20px;
+}

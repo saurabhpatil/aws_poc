@@ -19,7 +19,8 @@ import aws_connect.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index),
+    path('', views.index, name="main"),
+    path('<new_recs>', views.index, name="notify"),
     path('api/cpt-groups/<super_group>', views.get_cpt_groups, name="cpt_groups"),
     path('api/upload/cpt-groups', views.upload_group_file, name="cpt-upload")
 ]
