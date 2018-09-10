@@ -33,4 +33,4 @@ def upload_group_file(request):
     else:
         return redirect('main')
 
-    return redirect('notify', new_recs=created_count)
+    return index(request, new_recs=created_count)
