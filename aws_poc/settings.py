@@ -26,7 +26,11 @@ SECRET_KEY = '10(x0%zue+sota@_%9226eei8g74#mq&7mr%@#@$4z=^kisx*6'
 DEBUG = True
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'docker.for.mac.host.internal'
+ALLOWED_HOSTS = ['127.0.0.1', 
+                 '54.159.246.242',
+                 'localhost', 
+                 'docker.for.mac.host.internal',
+                 'ec2-54-159-246-242.compute-1.amazonaws.com',
                  'aws-poc-dev.us-east-1.elasticbeanstalk.com']
 
 # Application definition
