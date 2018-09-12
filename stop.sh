@@ -1,0 +1,1 @@
+kill -9 `ps aux |grep gunicorn |grep aws_poc | awk '{ print $2 }'`
