@@ -30,8 +30,9 @@ ALLOWED_HOSTS = ['127.0.0.1',
                  '54.159.246.242',
                  'localhost', 
                  'docker.for.mac.host.internal',
-                 'ec2-54-159-246-242.compute-1.amazonaws.com',
-                 'aws-poc-dev.us-east-1.elasticbeanstalk.com']
+                 '.compute-1.amazonaws.com',
+                 'aws-poc-dev.us-east-1.elasticbeanstalk.com',
+                 '.execute-api.us-east-1.amazonaws.com']
 
 # Application definition
 
