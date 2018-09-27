@@ -1,0 +1,17 @@
+{
+    "dev": {
+        "aws_region": "us-east-1",
+        "django_settings": "aws_poc.settings",
+        "profile_name": "default",
+        "project_name": "atlas-webapp",
+        "runtime": "python3.6",
+        "s3_bucket": "ct-atlas-zappa-bucket",
+        "environment_variables": {"RDS_DB_NAME": "pennmed",
+                                  "RDS_USERNAME": "pennmed_user",
+                                  "RDS_PASSWORD": "P3nnM3d_1234",
+                                  "RDS_HOSTNAME": "ct-atlas-rds.cl3vyizanq6q.us-east-1.rds.amazonaws.com",
+                                  "RDS_PORT": "5432"},
+        "keep_warm": false,
+        "lambda_description": "CT - Atlas webapp for fetching RDS data and S3 files"
+    }
+}
