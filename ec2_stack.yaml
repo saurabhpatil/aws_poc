@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: "Atlas - EC2 setup"
+Parameters:
+  CTIamProfileName:
+    Type: String
+    Default: "ct-map-ec2-role"
+  AppSecurityGroupId:
+    Type: String
+    Default: "sg-b97c3df2"
+  SubnetCT: 
+    Type: String
+    Default: "subnet-96ead9e0"
+  KeyName:
+    Type: String
+    Default: "CT_AWS_DEV"
+Resources: 
+  CTAtlasEC2Instance: 
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: "ami-04681a1dbd79675a5"
+      InstanceType: "t2.micro"
+      AvailabilityZone: "us-east-1a"
+      IamInstanceProfile: "ct-map-ec2-role"
+      SecurityGroupIds:
+        - "sg-b97c3df2"
+      SubnetId: "subnet-96ead9e0"
+      KeyName: "CT_AWS_DEV"
+      Tenancy: "default"
+      Tags: 
+        - 
+          Key: "AutoCleanup"
+          Value: "No"
+        - 
+          Key: "ProductName"
+          Value: "Atlas"
+        - 
+          Key: "Team"
+          Value: "ConsultingTechnologies"
+        -
+          Key: PHI
+          Value: "No"
+        -
+          Key: PII
+          Value: "No"
