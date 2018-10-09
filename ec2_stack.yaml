@@ -20,13 +20,22 @@ Resources:
       ImageId: "ami-04681a1dbd79675a5"
       InstanceType: "t2.micro"
       AvailabilityZone: "us-east-1a"
-      IamInstanceProfile: "ct-map-ec2-role"
-      SecurityGroupIds:
-        - "sg-b97c3df2"
-      SubnetId: "subnet-96ead9e0"
+      IamInstanceProfile:
+        !Ref CTIamProfileName
       KeyName: "CT_AWS_DEV"
       Tenancy: "default"
+      NetworkInterfaces: 
+        - AssociatePublicIpAddress: "true"
+          DeleteOnTermination: "true"
+          DeviceIndex: "0"
+          GroupSet: 
+            - !Ref AppSecurityGroupId
+          SubnetId: 
+            !Ref SubnetCT
       Tags: 
+        -
+          Key: "Name"
+          Value: "ct-atlas-cf-ec2"
         - 
           Key: "AutoCleanup"
           Value: "No"
@@ -42,3 +51,4 @@ Resources:
         -
           Key: PII
           Value: "No"
+    
