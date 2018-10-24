@@ -9,4 +9,5 @@ source <(sed -E -n 's/[^#]+/export &/ p' .env)
 echo Starting Gunicorn Server
 exec gunicorn aws_poc.wsgi:application \
     --bind 0.0.0.0:8000 \
-    --workers 3
+    --workers 5 \
+    &
