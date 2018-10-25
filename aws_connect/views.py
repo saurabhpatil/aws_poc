@@ -1,36 +1,49 @@
+import csv
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from datetime import datetime
 
-from aws_connect.models import SuperGroup, FileHandler
-from aws_connect.consts import SUPER_GROUP_S3_FOLDER
+from aws_connect.models import Department, AppointmentReport, Patient
 from aws_connect.utils.files import save_file
+from aws_connect.consts import PATIENT_DETAILS_HEADERS
 
-def index(request, new_recs=None):
-    super_groups = SuperGroup.objects.values('super_group').distinct()
-    return render(request, 'base.html', {'super_groups': super_groups, 'new_recs': new_recs})
+def index(request):
+    departments = Department.objects.values('dept_key', 'dept_name').distinct()
+    apt_min_date = AppointmentReport.objects.earliest('appt_start_datetime').appt_start_datetime.strftime("%m/%d/%y")
+    apt_max_date = AppointmentReport.objects.latest('appt_start_datetime').appt_start_datetime.strftime("%m/%d/%y")
+    return render(request, 'base.html', {'departments': departments, 'min_date': apt_min_date, 'max_date': apt_max_date})
 
-def get_cpt_groups(request, super_group):
-    cpt_groups = SuperGroup.objects.filter(super_group=super_group)
-    return render(request, 'cpt_groups.html', {'groups': cpt_groups})
+def get_appts(request):
+    appts = dict()
+    columns = ['appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name']
+    daterange = [datetime.strptime(date_var, '%m/%d/%Y') for date_var in request.GET['daterange'].split(' - ')]
 
-def upload_group_file(request):
-    if request.method == 'POST':
-        created_count = 0
-        file_info = request.FILES['file']
-        file_name = file_info.name
-        file_bytes = file_info.read()
-        file_data = file_bytes.decode('utf-8')
-
-        for data_row in file_data.split('\r')[1:]:
-            fields = data_row.split(',')
-            obj, created = SuperGroup.objects.get_or_create(super_group=fields[1], primary_cpt_group=fields[2])
-            if created == True:
-                created_count += 1
+    if request.GET['dept'] != '':
+        appts = AppointmentReport.objects \
+                .filter(dept_key=request.GET['dept'], appt_start_datetime__range=daterange) \
+                .values('appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name')
+    return appts
     
-        if created_count > 0:
-            file_rec = save_file(settings.AWS_S3_BUCKET, SUPER_GROUP_S3_FOLDER, file_name, file_bytes)
-    else:
-        return redirect('main')
+def get_patient_details(request):
+    appts = get_appts(request)
 
-    return index(request, new_recs=created_count)
+    return render(request, 'table.html', {'rows': appts, 'headers': PATIENT_DETAILS_HEADERS})
+
+def download_csv(request):
+    appts = get_appts(request)
+
+    response = HttpResponse(content_type='text/csv')
+    # response["X-Accel-Buffering"] = "no"
+    response['Content-Disposition'] = 'attachment; filename="patient_access.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(PATIENT_DETAILS_HEADERS)
+
+    for appt in appts:
+        writer.writerow(appt.values())
+
+    return response
+
+# def get_slots(request):
+#     pass

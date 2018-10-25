@@ -19,7 +19,7 @@ import aws_connect.views as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name="main"),
-    path('api/cpt-groups/<super_group>', views.get_cpt_groups, name="cpt_groups"),
-    path('api/upload/cpt-groups', views.upload_group_file, name="cpt-upload")
+    path('', views.index, name='main'),
+    path('patients', views.get_patient_details, name='patients'),
+    path('download', views.download_csv, name='download')
 ]

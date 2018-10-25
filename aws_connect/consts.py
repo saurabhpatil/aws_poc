@@ -1,1 +1,1 @@
-SUPER_GROUP_S3_FOLDER = 'SuperGroups/'
+PATIENT_DETAILS_HEADERS = ['Appt Start Time', 'Appt Duration', 'Patient Name']

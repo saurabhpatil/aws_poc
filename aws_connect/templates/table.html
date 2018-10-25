@@ -1,13 +1,15 @@
-<table class="table table-hover table-sm" id="table-cpt-groups">
+<table class="table table-hover table-bordered table-sm" id="patient-access-table">
     <thead class="thead-light">
-        <th>Super Group</th>
-        <th>Primary CPT Group</th>
+        {% for header in headers %}
+        <th>{{ header }}</th>
+        {% endfor %}
     </thead>
     <tbody>
-        {% for group in groups %}
+        {% for row in rows %}
         <tr>
-            <td>{{ group.super_group }}</td>
-            <td>{{ group.primary_cpt_group }}</td>
+            {% for key, value in row.items %}
+            <td>{{ value }}</td>
+            {% endfor %}
         </tr>
         {% endfor %}
     </tbody>

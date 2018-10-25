@@ -1,4 +1,4 @@
-button[id=upload-cpt] {
+.btn-atlas {
     margin-top: 10px;
     background-color: steelblue;
 }
@@ -15,4 +15,12 @@ input[id=cpt-file] {
 .notification.success {
     background-color: lightgreen;
     padding-left: 20px;
+}
+
+.nav-link {
+    color: steelblue;
+}
+
+#download-csv { 
+    margin-left: 5px;
 }
