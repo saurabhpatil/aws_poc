@@ -82,7 +82,9 @@
                 var daterange = $('#filter-daterange').val();
                 
                 $('#div-table-patient').load("{% url 'patients' %}?dept=" + encodeURI(dept) + "&daterange=" + encodeURI(daterange), function() {
-                    $('#patient-access-table').DataTable();
+                    $('#patient-access-table').DataTable({
+                        "order": [[ 4, "desc" ]]
+                    });
 
                     $('.select-outreach').change(function(e) {
                         var appt_key = this.name;

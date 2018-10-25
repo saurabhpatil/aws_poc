@@ -16,13 +16,13 @@ def index(request):
 
 def get_appts(request):
     appts = dict()
-    columns = ['rep_appt_key', 'appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'status']
+    columns = ['rep_appt_key', 'appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'prob_no_show', 'status']
     daterange = [datetime.strptime(date_var, '%m/%d/%Y') for date_var in request.GET['daterange'].split(' - ')]
 
     if request.GET['dept'] != '':
         appts = AppointmentReport.objects \
                 .filter(dept_key=request.GET['dept'], appt_start_datetime__range=daterange) \
-                .values('rep_appt_key', 'appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'status')
+                .values('rep_appt_key', 'appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'prob_no_show', 'status')
     return appts
     
 def get_patient_details(request):
@@ -32,13 +32,13 @@ def get_patient_details(request):
 
 def download_csv(request):
     appts = get_appts(request)
+    csv_headers = ['Appt. ID'] + PATIENT_DETAILS_HEADERS
 
     response = HttpResponse(content_type='text/csv')
-    # response["X-Accel-Buffering"] = "no"
     response['Content-Disposition'] = 'attachment; filename="patient_access.csv"'
 
     writer = csv.writer(response)
-    writer.writerow(PATIENT_DETAILS_HEADERS)
+    writer.writerow(csv_headers)
 
     for appt in appts:
         writer.writerow(appt.values())
