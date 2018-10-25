@@ -16,13 +16,13 @@ def index(request):
 
 def get_appts(request):
     appts = dict()
-    columns = ['appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name']
+    columns = ['rep_appt_key', 'appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'status']
     daterange = [datetime.strptime(date_var, '%m/%d/%Y') for date_var in request.GET['daterange'].split(' - ')]
 
     if request.GET['dept'] != '':
         appts = AppointmentReport.objects \
                 .filter(dept_key=request.GET['dept'], appt_start_datetime__range=daterange) \
-                .values('appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name')
+                .values('rep_appt_key', 'appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'status')
     return appts
     
 def get_patient_details(request):
@@ -45,5 +45,11 @@ def download_csv(request):
 
     return response
 
-# def get_slots(request):
-#     pass
+def update_status(request):
+    appt_key = request.GET['appt_key']
+    status = request.GET['status']
+
+    curr_appt = AppointmentReport.objects.get(rep_appt_key=appt_key)
+    curr_appt.update_status(status)
+
+    return True

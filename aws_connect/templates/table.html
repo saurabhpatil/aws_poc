@@ -7,8 +7,27 @@
     <tbody>
         {% for row in rows %}
         <tr>
-            {% for key, value in row.items %}
-            <td>{{ value }}</td>
+            {% for key, data in row.items %}
+                {% if key != 'status' and key != 'rep_appt_key' %}
+                    <td>{{ data }}</td>
+                {% elif key == 'status' %}
+                    <td>
+                        <select size="1" class="select-outreach" id="select-outreach-{{ row.rep_appt_key }}" name="{{ row.rep_appt_key }}">
+                            <option value="No Outreach" {% if data == "No Outreach" %}selected="selected"{% endif %}>
+                                No Outreach
+                            </option>
+                            <option value="Not Reached" {% if data == "Not Reached" %}selected="selected"{% endif %}>
+                                Not Reached
+                            </option>
+                            <option value="Confirmed" {% if data == "Confirmed" %}selected="selected"{% endif %}>
+                                Confirmed
+                            </option>
+                            <option value="Cancelled" {% if data == "Cancelled" %}selected="selected"{% endif %}>
+                                Cancelled
+                            </option>
+                        </select>
+                    </td>
+                {% endif %}
             {% endfor %}
         </tr>
         {% endfor %}

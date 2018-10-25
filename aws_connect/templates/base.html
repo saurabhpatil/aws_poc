@@ -83,6 +83,21 @@
                 
                 $('#div-table-patient').load("{% url 'patients' %}?dept=" + encodeURI(dept) + "&daterange=" + encodeURI(daterange), function() {
                     $('#patient-access-table').DataTable();
+
+                    $('.select-outreach').change(function(e) {
+                        var appt_key = this.name;
+                        var status = $("#select-outreach-" + appt_key + " option:selected").val();
+                        
+                        $.ajax({
+                            url: "{% url 'update' %}",
+                            type: 'GET',
+                            data: {
+                                'appt_key': appt_key,
+                                'status': status 
+                            },
+                            success: function(resp) {return;},
+                        })
+                    });
                 });
             });
 
@@ -96,18 +111,6 @@
                 urlElem.target = '_blank'
                 urlElem.download="patient_access.csv"
                 urlElem.click();
-
-                // $.ajax({
-                //     url: "{% url 'download' %}",
-                //     type: 'GET',
-                //     data: {
-                //         'dept': dept,
-                //         'daterange': daterange 
-                //     },
-                //     success: function (resp) {
-                //         return;
-                //     },
-                // })
             });
             
             $(".nav-tabs a").click(function(){

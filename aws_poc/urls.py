@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='main'),
     path('patients', views.get_patient_details, name='patients'),
-    path('download', views.download_csv, name='download')
+    path('download', views.download_csv, name='download'),
+    path('update-status', views.update_status, name='update')
 ]

@@ -116,6 +116,11 @@ class AppointmentReport(models.Model):
     note = models.TextField()
     create_date = models.DateTimeField(default=datetime.now())
     create_user = models.TextField()
+    status = models.TextField()
+
+    def update_status(self, status):
+        self.status = status
+        self.save()
 
     class Meta:
         db_table = 'rep\".\"appt'

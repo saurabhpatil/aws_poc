@@ -1,1 +1,1 @@
-PATIENT_DETAILS_HEADERS = ['Appt Start Time', 'Appt Duration', 'Patient Name']
+PATIENT_DETAILS_HEADERS = ['Appt Start Time', 'Appt Duration', 'Patient First Name', 'Patient Last Name', 'Status']
