@@ -17,10 +17,14 @@ input[id=cpt-file] {
     padding-left: 20px;
 }
 
-.nav-link {
+/* #report-tabs .nav-link.active {
     color: steelblue;
-}
+} */
 
 #download-csv { 
     margin-left: 5px;
+}
+
+#report-tabs .nav-link.disabled {
+    color: #ADADAD;
 }

@@ -16,13 +16,13 @@ def index(request):
 
 def get_appts(request):
     appts = dict()
-    columns = ['rep_appt_key', 'appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'prob_no_show', 'status']
+    columns = ['rep_appt_key', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'appt_start_datetime', 'appt_duration', 'prob_no_show', 'status']
     daterange = [datetime.strptime(date_var, '%m/%d/%Y') for date_var in request.GET['daterange'].split(' - ')]
 
     if request.GET['dept'] != '':
         appts = AppointmentReport.objects \
                 .filter(dept_key=request.GET['dept'], appt_start_datetime__range=daterange) \
-                .values('rep_appt_key', 'appt_start_datetime', 'appt_duration', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'prob_no_show', 'status')
+                .values('rep_appt_key', 'patient_key__patient_first_name', 'patient_key__patient_last_name', 'appt_start_datetime', 'appt_duration', 'prob_no_show', 'status')
     return appts
     
 def get_patient_details(request):
